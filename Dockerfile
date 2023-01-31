@@ -5,12 +5,12 @@ WORKDIR /app
 COPY . .
 
 RUN go mod download
-RUN go build -o /app main.go
-
-ENTRYPOINT ["go", "run", "main.go"]
+RUN go build -o app
 
 FROM scratch
 
-COPY --from=build /app /app
+WORKDIR /app
 
-ENTRYPOINT ["/app"]
+COPY --from=build /app .
+
+ENTRYPOINT ["./app"]
